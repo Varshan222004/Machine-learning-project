@@ -1,0 +1,189 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Women's Clothing Reviews Sentiment Analysis.ipynb",
+      "provenance": [],
+      "authorship_tag": "ABX9TyPZl4d0nA5Qmq8X1mDqSb1O"
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "dqZ-nhxiganh"
+      },
+      "source": [
+        "# Women's Clothing Reviews Sentiment Analysis"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Xns_rCdhh-vZ"
+      },
+      "source": [
+        "## Objective",
+        "Predict the sentiment of women's clothing reviews (positive or negative) using the Multinomial Naive Bayes algorithm."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Data Source",
+        "The dataset 'Womens Clothing E-Commerce Reviews.csv' contains customer reviews of women's clothing from an e-commerce site."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Import Library",
+        "```python",
+        "import pandas as pd",
+        "from sklearn.model_selection import train_test_split",
+        "from sklearn.feature_extraction.text import CountVectorizer",
+        "from sklearn.naive_bayes import MultinomialNB",
+        "from sklearn.metrics import accuracy_score, confusion_matrix, classification_report",
+        "```"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Import Data",
+        "```python",
+        "data = pd.read_csv('Womens Clothing E-Commerce Reviews.csv')",
+        "```"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Describe Data",
+        "```python",
+        "# Drop unnecessary columns",
+        "data = data[['Review Text', 'Rating']]",
+        "# Drop rows with missing review text",
+        "data.dropna(subset=['Review Text'], inplace=True)",
+        "# Convert ratings to binary sentiment",
+        "data['Sentiment'] = data['Rating'].apply(lambda x: 1 if x > 3 else 0)",
+        "# Display the first few rows",
+        "data.head()",
+        "```"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Data Visualization",
+        "Visualizations such as histograms, word clouds, etc., may be created to explore the data."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Data Preprocessing",
+        "```python",
+        "# Split the data",
+        "X_train, X_test, y_train, y_test = train_test_split(data['Review Text'], data['Sentiment'], test_size=0.2, random_state=42)",
+        "# Convert text data into numerical data using CountVectorizer",
+        "vectorizer = CountVectorizer()",
+        "X_train_vec = vectorizer.fit_transform(X_train)",
+        "X_test_vec = vectorizer.transform(X_test)",
+        "```"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Define Target Variable (y) and Feature Variables (X)",
+        "```python",
+        "# Already done in Data Preprocessing",
+        "```"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Train Test Split",
+        "```python",
+        "# Already done in Data Preprocessing",
+        "```"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Modeling",
+        "```python",
+        "# Train the Multinomial Naive Bayes model",
+        "model = MultinomialNB()",
+        "model.fit(X_train_vec, y_train)",
+        "```"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Model Evaluation",
+        "```python",
+        "# Make predictions on the test set",
+        "y_pred = model.predict(X_test_vec)",
+        "# Evaluate the model",
+        "print('Accuracy:', accuracy_score(y_test, y_pred))",
+        "print('Confusion Matrix:\\n', confusion_matrix(y_test, y_pred))",
+        "print('Classification Report:\\n', classification_report(y_test, y_pred))",
+        "```"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-Vbnt9CciKJP"
+      },
+      "source": [
+        "## Prediction",
+        "```python",
+        "# Make predictions on new data if needed",
+        "# For example:",
+        "# new_text = ['This dress fits perfectly and looks great!', 'The quality of this shirt is poor.']",
+        "# new_text_vec = vectorizer.transform(new_text)",
+        "# predicted_sent
